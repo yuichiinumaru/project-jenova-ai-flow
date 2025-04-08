@@ -14,6 +14,7 @@ import FlowDiagram from "./pages/FlowDiagram";
 import MindMap from "./pages/MindMap";
 import ValueStream from "./pages/ValueStream";
 import AIAssistant from "./pages/AIAssistant";
+import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -35,6 +36,7 @@ const App = () => (
             <Route path="/mind-map" element={<MindMap />} />
             <Route path="/value-stream" element={<ValueStream />} />
             <Route path="/assistant" element={<AIAssistant />} />
+            <Route path="/settings" element={<Settings />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -46,42 +45,42 @@
   }
 
   .dark-purple {
-    --background: 230 30% 15%;
-    --foreground: 210 40% 98%;
+    --background: 260 30% 10%;
+    --foreground: 270 40% 98%;
 
-    --card: 230 30% 15%;
-    --card-foreground: 210 40% 98%;
+    --card: 260 30% 12%;
+    --card-foreground: 270 40% 98%;
 
-    --popover: 230 30% 15%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 260 30% 12%;
+    --popover-foreground: 270 40% 98%;
 
-    --primary: 250 95% 76%;
+    --primary: 270 95% 76%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 237 24% 25%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 267 24% 25%;
+    --secondary-foreground: 270 40% 98%;
 
-    --muted: 237 24% 20%;
-    --muted-foreground: 215 20.2% 75%;
+    --muted: 267 24% 20%;
+    --muted-foreground: 270 20.2% 75%;
 
-    --accent: 237 24% 25%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 267 24% 25%;
+    --accent-foreground: 270 40% 98%;
 
     --destructive: 0 62.8% 50.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 270 40% 98%;
 
-    --border: 237 24% 25%;
-    --input: 237 24% 25%;
-    --ring: 250 95% 76%;
+    --border: 267 24% 25%;
+    --input: 267 24% 25%;
+    --ring: 270 95% 76%;
 
-    --sidebar-background: 230 30% 12%;
-    --sidebar-foreground: 250 95% 90%;
-    --sidebar-primary: 250 95% 76%;
+    --sidebar-background: 260 30% 8%;
+    --sidebar-foreground: 270 95% 90%;
+    --sidebar-primary: 270 95% 76%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 237 24% 25%;
-    --sidebar-accent-foreground: 250 95% 90%;
-    --sidebar-border: 237 24% 25%;
-    --sidebar-ring: 250 95% 76%;
+    --sidebar-accent: 267 24% 25%;
+    --sidebar-accent-foreground: 270 95% 90%;
+    --sidebar-border: 267 24% 25%;
+    --sidebar-ring: 270 95% 76%;
   }
 
   .dark-tactical {
