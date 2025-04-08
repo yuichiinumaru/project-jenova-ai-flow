@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { 
@@ -12,7 +11,8 @@ import {
   Braces, 
   BrainCircuit, 
   Settings,
-  MessageSquare
+  MessageSquare,
+  Users
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -66,6 +66,11 @@ export function AppSidebar() {
       title: "Value Stream",
       href: "/value-stream",
       icon: Braces,
+    },
+    {
+      title: "Teams",
+      href: "/teams",
+      icon: Users,
     },
   ];
 
