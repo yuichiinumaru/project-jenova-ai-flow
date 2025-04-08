@@ -46,31 +46,26 @@ export function AppSidebar() {
       title: "Calendar",
       href: "/calendar",
       icon: Calendar,
-      disabled: true,
     },
     {
       title: "Charts",
       href: "/charts",
       icon: BarChart,
-      disabled: true,
     },
     {
       title: "Flow Diagram",
       href: "/flow",
       icon: Workflow,
-      disabled: true,
     },
     {
       title: "Mind Map",
       href: "/mind-map",
       icon: Network,
-      disabled: true,
     },
     {
       title: "Value Stream",
       href: "/value-stream",
       icon: Braces,
-      disabled: true,
     },
   ];
 
