@@ -118,5 +118,13 @@ export default {
 			}
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [
+		require("tailwindcss-animate"),
+		function({ addVariant }) {
+			// Add custom theme variants
+			addVariant('dark-purple', '.dark-purple &');
+			addVariant('dark-tactical', '.dark-tactical &');
+			addVariant('dark-hacker', '.dark-hacker &');
+		}
+	],
 } satisfies Config;

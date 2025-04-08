@@ -173,64 +173,68 @@
   }
 }
 
-/* Kanban Board Styles */
-.kanban-column {
-  min-height: 500px;
-  @apply bg-gray-50 dark-purple:bg-[#232840] dark-tactical:bg-[#2A3C30] dark-hacker:bg-[#1A1A1A] rounded-md p-3 min-w-[280px];
+@layer components {
+  /* Kanban Board Styles */
+  .kanban-column {
+    min-height: 500px;
+    @apply bg-gray-50 dark-purple:bg-[#232840] dark-tactical:bg-[#2A3C30] dark-hacker:bg-[#1A1A1A] rounded-md p-3 min-w-[280px];
+  }
+
+  .task-card {
+    @apply bg-white dark-purple:bg-[#2D3549] dark-purple:text-gray-200 dark-tactical:bg-[#384D3E] dark-tactical:text-gray-200 dark-hacker:bg-[#242424] dark-hacker:text-gray-200 p-3 rounded-md shadow-sm mb-2 cursor-pointer hover:shadow-md transition-shadow;
+  }
+
+  /* Timeline Styles */
+  .timeline-container {
+    @apply overflow-x-auto;
+  }
+
+  .timeline-grid {
+    @apply grid grid-cols-[100px_repeat(30,120px)] min-w-full;
+  }
+
+  .timeline-header {
+    @apply sticky top-0 bg-gray-50 dark-purple:bg-[#232840] dark-tactical:bg-[#2A3C30] dark-hacker:bg-[#1A1A1A] z-10;
+  }
+
+  .timeline-row {
+    @apply h-12 border-b border-gray-100 dark-purple:border-[#2D3549] dark-tactical:border-[#384D3E] dark-hacker:border-[#242424];
+  }
+
+  .task-bar {
+    @apply absolute h-8 rounded-md flex items-center px-2 text-xs text-white;
+  }
+
+  /* Chat UI Styles */
+  .chat-message {
+    @apply p-3 rounded-lg my-2 max-w-[85%];
+  }
+
+  .user-message {
+    @apply bg-zenith-primary dark-purple:bg-purple-600 dark-tactical:bg-green-700 dark-hacker:bg-red-600 text-white ml-auto;
+  }
+
+  .ai-message {
+    @apply bg-gray-200 dark-purple:bg-[#2D3549] dark-tactical:bg-[#384D3E] dark-hacker:bg-[#242424] text-gray-800 dark-purple:text-gray-200 dark-tactical:text-gray-200 dark-hacker:text-gray-200 mr-auto;
+  }
 }
 
-.task-card {
-  @apply bg-white dark-purple:bg-[#2D3549] dark-purple:text-gray-200 dark-tactical:bg-[#384D3E] dark-tactical:text-gray-200 dark-hacker:bg-[#242424] dark-hacker:text-gray-200 p-3 rounded-md shadow-sm mb-2 cursor-pointer hover:shadow-md transition-shadow;
-}
+@layer utilities {
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
 
-/* Timeline Styles */
-.timeline-container {
-  @apply overflow-x-auto;
-}
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-100 dark-purple:bg-[#232840] dark-tactical:bg-[#2A3C30] dark-hacker:bg-[#1A1A1A];
+  }
 
-.timeline-grid {
-  @apply grid grid-cols-[100px_repeat(30,120px)] min-w-full;
-}
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 dark-purple:bg-[#9b87f5] dark-tactical:bg-[#4D6E58] dark-hacker:bg-[#ea384c] rounded-full;
+  }
 
-.timeline-header {
-  @apply sticky top-0 bg-gray-50 dark-purple:bg-[#232840] dark-tactical:bg-[#2A3C30] dark-hacker:bg-[#1A1A1A] z-10;
-}
-
-.timeline-row {
-  @apply h-12 border-b border-gray-100 dark-purple:border-[#2D3549] dark-tactical:border-[#384D3E] dark-hacker:border-[#242424];
-}
-
-.task-bar {
-  @apply absolute h-8 rounded-md flex items-center px-2 text-xs text-white;
-}
-
-/* Chat UI Styles */
-.chat-message {
-  @apply p-3 rounded-lg my-2 max-w-[85%];
-}
-
-.user-message {
-  @apply bg-zenith-primary dark-purple:bg-purple-600 dark-tactical:bg-green-700 dark-hacker:bg-red-600 text-white ml-auto;
-}
-
-.ai-message {
-  @apply bg-gray-200 dark-purple:bg-[#2D3549] dark-tactical:bg-[#384D3E] dark-hacker:bg-[#242424] text-gray-800 dark-purple:text-gray-200 dark-tactical:text-gray-200 dark-hacker:text-gray-200 mr-auto;
-}
-
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-::-webkit-scrollbar-track {
-  @apply bg-gray-100 dark-purple:bg-[#232840] dark-tactical:bg-[#2A3C30] dark-hacker:bg-[#1A1A1A];
-}
-
-::-webkit-scrollbar-thumb {
-  @apply bg-gray-300 dark-purple:bg-[#9b87f5] dark-tactical:bg-[#4D6E58] dark-hacker:bg-[#ea384c] rounded-full;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-400 dark-purple:bg-purple-400 dark-tactical:bg-green-600 dark-hacker:bg-red-500;
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-400 dark-purple:bg-purple-400 dark-tactical:bg-green-600 dark-hacker:bg-red-500;
+  }
 }
