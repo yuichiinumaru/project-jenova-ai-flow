@@ -28,7 +28,7 @@ type NavItem = {
 
 export function AppSidebar() {
   const location = useLocation();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   
   const mainNavItems: NavItem[] = [
     {
@@ -159,6 +159,8 @@ export function AppSidebar() {
 }
 
 function NavItem({ item, isActive, t }: { item: NavItem; isActive: boolean; t: (key: string) => string }) {
+  const { language } = useLanguage();
+  
   return (
     <Link
       to={item.disabled ? "#" : item.href}
@@ -171,7 +173,7 @@ function NavItem({ item, isActive, t }: { item: NavItem; isActive: boolean; t: (
       )}
     >
       <item.icon className="w-5 h-5" />
-      <span>{item.titleKey === "research" ? (t.language === 'en' ? "Deep Research" : "Pesquisa Profunda") : t(item.titleKey)}</span>
+      <span>{item.titleKey === "research" ? (language === 'en' ? "Deep Research" : "Pesquisa Profunda") : t(item.titleKey)}</span>
       {item.disabled && <span className="ml-auto text-xs text-gray-400">Soon</span>}
     </Link>
   );
