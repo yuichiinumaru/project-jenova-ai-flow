@@ -1,6 +1,5 @@
-
-import React from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import React, { useState } from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
@@ -11,11 +10,15 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { ThemeType } from '@/components/MainLayout';
 import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { AlertCircle, Info, Key } from 'lucide-react';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 export default function Settings() {
   const { toast } = useToast();
   const { language, setLanguage, t } = useLanguage();
-  
+  const [googleApiKey, setGoogleApiKey] = useState('');
+  const [serpApiKey, setSerpApiKey] = useState('');
+
   const handleSaveProfile = () => {
     toast({
       title: "Profile Updated",
@@ -30,6 +33,18 @@ export default function Settings() {
     });
   };
 
+  const handleSaveApiKeys = () => {
+    localStorage.setItem('googleApiKey', googleApiKey);
+    localStorage.setItem('serpApiKey', serpApiKey);
+    
+    toast({
+      title: language === 'en' ? "API Keys Saved" : "Chaves de API Salvas",
+      description: language === 'en' 
+        ? "Your API keys have been securely saved." 
+        : "Suas chaves de API foram salvas com segurança.",
+    });
+  };
+
   const handleLanguageChange = (newLanguage: 'en' | 'pt') => {
     setLanguage(newLanguage);
     toast({
@@ -39,6 +54,14 @@ export default function Settings() {
         : "O idioma da aplicação foi alterado para Português.",
     });
   };
+
+  React.useEffect(() => {
+    const savedGoogleApiKey = localStorage.getItem('googleApiKey') || '';
+    const savedSerpApiKey = localStorage.getItem('serpApiKey') || '';
+    
+    setGoogleApiKey(savedGoogleApiKey);
+    setSerpApiKey(savedSerpApiKey);
+  }, []);
 
   return (
     <div className="space-y-6">
@@ -61,6 +84,10 @@ export default function Settings() {
           </TabsTrigger>
           <TabsTrigger value="notifications">
             {language === 'en' ? "Notifications" : "Notificações"}
+          </TabsTrigger>
+          <TabsTrigger value="api-keys">
+            <Key className="h-4 w-4 mr-2" />
+            {language === 'en' ? "API Keys" : "Chaves de API"}
           </TabsTrigger>
         </TabsList>
         
@@ -255,6 +282,79 @@ export default function Settings() {
                 {language === 'en' ? "Save Preferences" : "Salvar Preferências"}
               </Button>
             </CardContent>
+          </Card>
+        </TabsContent>
+        
+        <TabsContent value="api-keys" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>
+                {language === 'en' ? "API Integration Keys" : "Chaves de Integração de API"}
+              </CardTitle>
+              <CardDescription>
+                {language === 'en' 
+                  ? "Manage API keys for external service integrations" 
+                  : "Gerencie chaves de API para integrações com serviços externos"}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <Alert variant="warning" className="mb-6">
+                <AlertCircle className="h-4 w-4" />
+                <AlertTitle>
+                  {language === 'en' ? "Important Security Notice" : "Aviso de Segurança Importante"}
+                </AlertTitle>
+                <AlertDescription>
+                  {language === 'en' 
+                    ? "In a production environment, API keys should be stored securely on the server side. This implementation is for demonstration purposes only." 
+                    : "Em um ambiente de produção, as chaves de API devem ser armazenadas com segurança no lado do servidor. Esta implementação é apenas para fins de demonstração."}
+                </AlertDescription>
+              </Alert>
+              
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="google-api-key" className="flex items-center gap-2">
+                    {language === 'en' ? "Google API Key" : "Chave de API do Google"}
+                    <Info className="h-4 w-4 text-gray-400 cursor-help" />
+                  </Label>
+                  <Input 
+                    id="google-api-key" 
+                    type="password"
+                    value={googleApiKey}
+                    onChange={(e) => setGoogleApiKey(e.target.value)}
+                    placeholder={language === 'en' ? "Enter your Google API key" : "Insira sua chave de API do Google"} 
+                  />
+                  <p className="text-sm text-gray-500 dark-purple:text-gray-400 dark-tactical:text-gray-400 dark-hacker:text-gray-400">
+                    {language === 'en' 
+                      ? "This key will be used for Gmail, Docs, Drive, Sheets, Slides, YouTube APIs" 
+                      : "Esta chave será usada para APIs do Gmail, Docs, Drive, Sheets, Slides, YouTube"}
+                  </p>
+                </div>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="serp-api-key" className="flex items-center gap-2">
+                    {language === 'en' ? "SerpAPI Key" : "Chave de API do SerpAPI"}
+                    <Info className="h-4 w-4 text-gray-400 cursor-help" />
+                  </Label>
+                  <Input 
+                    id="serp-api-key" 
+                    type="password"
+                    value={serpApiKey}
+                    onChange={(e) => setSerpApiKey(e.target.value)}
+                    placeholder={language === 'en' ? "Enter your SerpAPI key" : "Insira sua chave de API do SerpAPI"} 
+                  />
+                  <p className="text-sm text-gray-500 dark-purple:text-gray-400 dark-tactical:text-gray-400 dark-hacker:text-gray-400">
+                    {language === 'en' 
+                      ? "Used for Search, News, Maps, Finance, Events, Local, and Trends APIs" 
+                      : "Usada para APIs de Pesquisa, Notícias, Mapas, Finanças, Eventos, Local e Tendências"}
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+            <CardFooter>
+              <Button onClick={handleSaveApiKeys} className="w-full md:w-auto">
+                {language === 'en' ? "Save API Keys" : "Salvar Chaves de API"}
+              </Button>
+            </CardFooter>
           </Card>
         </TabsContent>
       </Tabs>
