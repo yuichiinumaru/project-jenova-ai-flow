@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger 
 } from '@/components/ui/dropdown-menu';
 import { NewsTicker } from './NewsTicker';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 // Define theme types
 export type ThemeType = 'light' | 'dark-purple' | 'dark-tactical' | 'dark-hacker';
@@ -20,6 +21,7 @@ export function MainLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const [theme, setTheme] = useState<ThemeType>('light');
+  const { t } = useLanguage();
 
   // Apply theme to document on mount and when theme changes
   useEffect(() => {
@@ -68,19 +70,19 @@ export function MainLayout() {
               <DropdownMenuContent align="end">
                 <DropdownMenuItem onClick={() => setTheme('light')}>
                   <Sun className="mr-2 h-4 w-4" />
-                  <span>Light</span>
+                  <span>{t('light')}</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setTheme('dark-purple')}>
                   <Moon className="mr-2 h-4 w-4 text-purple-400" />
-                  <span>Dark Purple</span>
+                  <span>{t('darkPurple')}</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setTheme('dark-tactical')}>
                   <Moon className="mr-2 h-4 w-4 text-green-600" />
-                  <span>Tactical Dark</span>
+                  <span>{t('darkTactical')}</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setTheme('dark-hacker')}>
                   <Moon className="mr-2 h-4 w-4 text-red-500" />
-                  <span>Hacker</span>
+                  <span>{t('darkHacker')}</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

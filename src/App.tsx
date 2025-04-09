@@ -18,34 +18,39 @@ import Intelligence from "./pages/Intelligence";
 import Settings from "./pages/Settings";
 import Teams from "./pages/Teams";
 import NotFound from "./pages/NotFound";
+import DeepResearch from "./pages/DeepResearch";
+import { LanguageProvider } from "./contexts/LanguageContext";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route element={<MainLayout />}>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/kanban" element={<KanbanBoard />} />
-            <Route path="/timeline" element={<Timeline />} />
-            <Route path="/calendar" element={<Calendar />} />
-            <Route path="/charts" element={<Charts />} />
-            <Route path="/flow" element={<FlowDiagram />} />
-            <Route path="/mind-map" element={<MindMap />} />
-            <Route path="/value-stream" element={<ValueStream />} />
-            <Route path="/intelligence" element={<Intelligence />} />
-            <Route path="/teams" element={<Teams />} />
-            <Route path="/assistant" element={<AIAssistant />} />
-            <Route path="/settings" element={<Settings />} />
-          </Route>
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
+    <LanguageProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route element={<MainLayout />}>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/kanban" element={<KanbanBoard />} />
+              <Route path="/timeline" element={<Timeline />} />
+              <Route path="/calendar" element={<Calendar />} />
+              <Route path="/charts" element={<Charts />} />
+              <Route path="/flow" element={<FlowDiagram />} />
+              <Route path="/mind-map" element={<MindMap />} />
+              <Route path="/value-stream" element={<ValueStream />} />
+              <Route path="/intelligence" element={<Intelligence />} />
+              <Route path="/teams" element={<Teams />} />
+              <Route path="/assistant" element={<AIAssistant />} />
+              <Route path="/research" element={<DeepResearch />} />
+              <Route path="/settings" element={<Settings />} />
+            </Route>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </LanguageProvider>
   </QueryClientProvider>
 );
 

@@ -1,376 +1,263 @@
 
-import React, { useState } from "react";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Separator } from "@/components/ui/separator";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Switch } from "@/components/ui/switch";
-import { toast } from "@/components/ui/use-toast";
-import { useToast } from "@/hooks/use-toast";
-import { Save, Key, User, Bell, Shield, LogOut } from "lucide-react";
+import React from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Label } from '@/components/ui/label';
+import { Switch } from '@/components/ui/switch';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { ThemeType } from '@/components/MainLayout';
+import { useToast } from '@/hooks/use-toast';
+import { useLanguage } from '@/contexts/LanguageContext';
 
-const Settings = () => {
+export default function Settings() {
   const { toast } = useToast();
-  const [profileData, setProfileData] = useState({
-    name: "John Doe",
-    email: "john.doe@example.com",
-    avatarUrl: "https://avatars.githubusercontent.com/u/124599?v=4",
-    jobTitle: "Senior Project Manager",
-    company: "Acme Inc.",
-    bio: "Experienced project manager with a focus on delivering high-quality software products."
-  });
-
-  const [apiKeys, setApiKeys] = useState({
-    gemini: "",
-    openai: "",
-  });
-
-  const handleProfileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setProfileData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleApiKeyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setApiKeys((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const saveProfile = () => {
+  const { language, setLanguage, t } = useLanguage();
+  
+  const handleSaveProfile = () => {
     toast({
       title: "Profile Updated",
-      description: "Your profile information has been saved."
+      description: "Your profile settings have been saved.",
     });
   };
 
-  const saveApiKeys = () => {
+  const handleSaveNotifications = () => {
     toast({
-      title: "API Keys Saved",
-      description: "Your API keys have been securely stored."
+      title: "Notification Settings Updated",
+      description: "Your notification preferences have been saved.",
+    });
+  };
+
+  const handleLanguageChange = (newLanguage: 'en' | 'pt') => {
+    setLanguage(newLanguage);
+    toast({
+      title: newLanguage === 'en' ? "Language Changed" : "Idioma Alterado",
+      description: newLanguage === 'en' 
+        ? "The application language has been set to English." 
+        : "O idioma da aplicação foi alterado para Português.",
     });
   };
 
   return (
-    <div className="container max-w-6xl mx-auto">
-      <div className="flex flex-col space-y-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-3xl font-bold tracking-tight">Settings</h2>
-            <p className="text-muted-foreground">
-              Manage your account settings and preferences
-            </p>
-          </div>
-        </div>
-
-        <Tabs defaultValue="profile" className="w-full">
-          <TabsList className="grid w-full grid-cols-5">
-            <TabsTrigger value="profile">Profile</TabsTrigger>
-            <TabsTrigger value="api-keys">API Keys</TabsTrigger>
-            <TabsTrigger value="notifications">Notifications</TabsTrigger>
-            <TabsTrigger value="security">Security</TabsTrigger>
-            <TabsTrigger value="account">Account</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="profile" className="mt-6 space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <User className="size-5" />
-                  Personal Information
-                </CardTitle>
-                <CardDescription>
-                  Update your personal information and profile picture
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="flex flex-col md:flex-row gap-6">
-                  <div className="flex flex-col items-center gap-4">
-                    <Avatar className="size-32">
-                      <AvatarImage src={profileData.avatarUrl} alt={profileData.name} />
-                      <AvatarFallback>{profileData.name.charAt(0)}</AvatarFallback>
-                    </Avatar>
-                    <Button variant="outline" size="sm">Change Avatar</Button>
-                  </div>
-                  
-                  <div className="flex-1 grid gap-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="name">Full Name</Label>
-                        <Input 
-                          id="name" 
-                          name="name" 
-                          value={profileData.name} 
-                          onChange={handleProfileChange} 
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="email">Email</Label>
-                        <Input 
-                          id="email" 
-                          name="email" 
-                          type="email" 
-                          value={profileData.email} 
-                          onChange={handleProfileChange} 
-                        />
-                      </div>
-                    </div>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="jobTitle">Job Title</Label>
-                        <Input 
-                          id="jobTitle" 
-                          name="jobTitle" 
-                          value={profileData.jobTitle} 
-                          onChange={handleProfileChange} 
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="company">Company</Label>
-                        <Input 
-                          id="company" 
-                          name="company" 
-                          value={profileData.company} 
-                          onChange={handleProfileChange} 
-                        />
-                      </div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="bio">Bio</Label>
-                      <Input 
-                        id="bio" 
-                        name="bio" 
-                        value={profileData.bio} 
-                        onChange={handleProfileChange} 
-                      />
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-              <CardFooter className="flex justify-end">
-                <Button onClick={saveProfile}>
-                  <Save className="mr-2 h-4 w-4" />
-                  Save Changes
-                </Button>
-              </CardFooter>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="api-keys" className="mt-6 space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Key className="size-5" />
-                  API Keys
-                </CardTitle>
-                <CardDescription>
-                  Manage your API keys for external services
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="gemini">Gemini API Key</Label>
-                    <Input 
-                      id="gemini" 
-                      name="gemini" 
-                      type="password" 
-                      value={apiKeys.gemini} 
-                      onChange={handleApiKeyChange} 
-                      placeholder="Enter your Gemini API key"
-                    />
-                    <p className="text-xs text-muted-foreground mt-1">
-                      Used for AI-powered features and the assistant functionality
-                    </p>
-                  </div>
-                  
-                  <Separator />
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="openai">OpenAI API Key (Optional)</Label>
-                    <Input 
-                      id="openai" 
-                      name="openai" 
-                      type="password" 
-                      value={apiKeys.openai} 
-                      onChange={handleApiKeyChange} 
-                      placeholder="Enter your OpenAI API key"
-                    />
-                    <p className="text-xs text-muted-foreground mt-1">
-                      Alternative AI provider for enhanced capabilities
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-              <CardFooter className="flex justify-end">
-                <Button onClick={saveApiKeys}>
-                  <Save className="mr-2 h-4 w-4" />
-                  Save API Keys
-                </Button>
-              </CardFooter>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="notifications" className="mt-6 space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Bell className="size-5" />
-                  Notification Settings
-                </CardTitle>
-                <CardDescription>
-                  Configure how and when you receive notifications
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div className="space-y-0.5">
-                      <Label>Email Notifications</Label>
-                      <p className="text-sm text-muted-foreground">
-                        Receive email updates about your projects
-                      </p>
-                    </div>
-                    <Switch defaultChecked />
-                  </div>
-                  
-                  <Separator />
-                  
-                  <div className="flex items-center justify-between">
-                    <div className="space-y-0.5">
-                      <Label>Task Reminders</Label>
-                      <p className="text-sm text-muted-foreground">
-                        Get reminded about upcoming deadlines
-                      </p>
-                    </div>
-                    <Switch defaultChecked />
-                  </div>
-                  
-                  <Separator />
-                  
-                  <div className="flex items-center justify-between">
-                    <div className="space-y-0.5">
-                      <Label>Team Activity</Label>
-                      <p className="text-sm text-muted-foreground">
-                        Updates when team members modify projects
-                      </p>
-                    </div>
-                    <Switch defaultChecked />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="security" className="mt-6 space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Shield className="size-5" />
-                  Security Settings
-                </CardTitle>
-                <CardDescription>
-                  Manage your account security and authentication options
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="grid gap-2">
-                    <Label htmlFor="current-password">Current Password</Label>
-                    <Input id="current-password" type="password" />
-                  </div>
-                  
-                  <div className="grid gap-2">
-                    <Label htmlFor="new-password">New Password</Label>
-                    <Input id="new-password" type="password" />
-                  </div>
-                  
-                  <div className="grid gap-2">
-                    <Label htmlFor="confirm-password">Confirm New Password</Label>
-                    <Input id="confirm-password" type="password" />
-                  </div>
-                  
-                  <Button className="w-full md:w-auto">Change Password</Button>
-                  
-                  <Separator />
-                  
-                  <div className="flex items-center justify-between">
-                    <div className="space-y-0.5">
-                      <Label>Two-Factor Authentication</Label>
-                      <p className="text-sm text-muted-foreground">
-                        Add an extra layer of security to your account
-                      </p>
-                    </div>
-                    <Switch />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="account" className="mt-6 space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <User className="size-5" />
-                  Account Management
-                </CardTitle>
-                <CardDescription>
-                  Manage your account settings and subscription
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="p-4 border rounded-lg bg-muted/50">
-                    <div className="flex justify-between items-center">
-                      <div>
-                        <h4 className="font-medium">Current Plan: Pro</h4>
-                        <p className="text-sm text-muted-foreground">
-                          You are currently on the Pro plan, billed monthly.
-                        </p>
-                      </div>
-                      <Button variant="outline">Manage Subscription</Button>
-                    </div>
-                  </div>
-                  
-                  <Separator />
-                  
-                  <div className="flex flex-col gap-2">
-                    <h4 className="font-medium">Data Export</h4>
-                    <p className="text-sm text-muted-foreground">
-                      Download a copy of all your data stored in our system.
-                    </p>
-                    <Button variant="outline" className="w-full md:w-auto mt-2">
-                      Export Data
-                    </Button>
-                  </div>
-                  
-                  <Separator />
-                  
-                  <div className="flex flex-col gap-2">
-                    <h4 className="font-medium text-destructive">Danger Zone</h4>
-                    <p className="text-sm text-muted-foreground">
-                      Permanently delete your account and all associated data.
-                    </p>
-                    <div className="flex gap-4 mt-2">
-                      <Button variant="destructive">Delete Account</Button>
-                      <Button variant="outline">
-                        <LogOut className="mr-2 h-4 w-4" />
-                        Sign Out
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
+    <div className="space-y-6">
+      <div>
+        <h2 className="text-3xl font-bold mb-1">{t('settings')}</h2>
+        <p className="text-gray-500 dark-purple:text-gray-400 dark-tactical:text-gray-400 dark-hacker:text-gray-400">
+          {language === 'en' 
+            ? "Manage your account settings and preferences" 
+            : "Gerencie suas configurações e preferências de conta"}
+        </p>
       </div>
+      
+      <Tabs defaultValue="general">
+        <TabsList className="mb-4">
+          <TabsTrigger value="general">
+            {language === 'en' ? "General" : "Geral"}
+          </TabsTrigger>
+          <TabsTrigger value="appearance">
+            {language === 'en' ? "Appearance" : "Aparência"}
+          </TabsTrigger>
+          <TabsTrigger value="notifications">
+            {language === 'en' ? "Notifications" : "Notificações"}
+          </TabsTrigger>
+        </TabsList>
+        
+        <TabsContent value="general" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>
+                {language === 'en' ? "Profile Information" : "Informações de Perfil"}
+              </CardTitle>
+              <CardDescription>
+                {language === 'en' 
+                  ? "Update your personal information and how others see you on the platform" 
+                  : "Atualize suas informações pessoais e como os outros te veem na plataforma"}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="name">
+                    {language === 'en' ? "Full Name" : "Nome Completo"}
+                  </Label>
+                  <Input id="name" defaultValue="John Doe" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="email">
+                    {language === 'en' ? "Email Address" : "Endereço de Email"}
+                  </Label>
+                  <Input id="email" type="email" defaultValue="john.doe@example.com" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="role">
+                    {language === 'en' ? "Job Title" : "Cargo"}
+                  </Label>
+                  <Input id="role" defaultValue="Project Manager" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="department">
+                    {language === 'en' ? "Department" : "Departamento"}
+                  </Label>
+                  <Input id="department" defaultValue="Engineering" />
+                </div>
+              </div>
+              <Button onClick={handleSaveProfile}>
+                {language === 'en' ? "Save Changes" : "Salvar Alterações"}
+              </Button>
+            </CardContent>
+          </Card>
+          
+          <Card>
+            <CardHeader>
+              <CardTitle>{t('language')}</CardTitle>
+              <CardDescription>
+                {language === 'en' 
+                  ? "Choose your preferred language for the application" 
+                  : "Escolha seu idioma preferido para a aplicação"}
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <RadioGroup 
+                defaultValue={language} 
+                className="space-y-3"
+                onValueChange={(value) => handleLanguageChange(value as 'en' | 'pt')}
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="en" id="en" />
+                  <Label htmlFor="en">{t('english')}</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="pt" id="pt" />
+                  <Label htmlFor="pt">{t('portuguese')}</Label>
+                </div>
+              </RadioGroup>
+            </CardContent>
+          </Card>
+        </TabsContent>
+        
+        <TabsContent value="appearance" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>
+                {language === 'en' ? "Theme" : "Tema"}
+              </CardTitle>
+              <CardDescription>
+                {language === 'en' 
+                  ? "Customize the look and feel of the application" 
+                  : "Personalize a aparência da aplicação"}
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Select defaultValue="light">
+                <SelectTrigger className="w-full md:w-[200px]">
+                  <SelectValue placeholder={language === 'en' ? "Select theme" : "Selecionar tema"} />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="light">{t('light')}</SelectItem>
+                  <SelectItem value="dark-purple">{t('darkPurple')}</SelectItem>
+                  <SelectItem value="dark-tactical">{t('darkTactical')}</SelectItem>
+                  <SelectItem value="dark-hacker">{t('darkHacker')}</SelectItem>
+                </SelectContent>
+              </Select>
+            </CardContent>
+          </Card>
+          
+          <Card>
+            <CardHeader>
+              <CardTitle>
+                {language === 'en' ? "Interface Density" : "Densidade da Interface"}
+              </CardTitle>
+              <CardDescription>
+                {language === 'en' 
+                  ? "Adjust how compact you want the user interface to be" 
+                  : "Ajuste o quão compacta você quer que a interface seja"}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <RadioGroup defaultValue="comfortable" className="space-y-3">
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="comfortable" id="comfortable" />
+                  <Label htmlFor="comfortable">
+                    {language === 'en' ? "Comfortable" : "Confortável"}
+                  </Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="compact" id="compact" />
+                  <Label htmlFor="compact">
+                    {language === 'en' ? "Compact" : "Compacto"}
+                  </Label>
+                </div>
+              </RadioGroup>
+            </CardContent>
+          </Card>
+        </TabsContent>
+        
+        <TabsContent value="notifications" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>
+                {language === 'en' ? "Notification Preferences" : "Preferências de Notificação"}
+              </CardTitle>
+              <CardDescription>
+                {language === 'en' 
+                  ? "Configure how you want to be notified about updates" 
+                  : "Configure como você quer ser notificado sobre atualizações"}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="space-y-0.5">
+                    <Label htmlFor="email-notif">
+                      {language === 'en' ? "Email Notifications" : "Notificações por Email"}
+                    </Label>
+                    <p className="text-sm text-gray-500 dark-purple:text-gray-400 dark-tactical:text-gray-400 dark-hacker:text-gray-400">
+                      {language === 'en' 
+                        ? "Receive updates via email" 
+                        : "Receba atualizações via email"}
+                    </p>
+                  </div>
+                  <Switch id="email-notif" defaultChecked />
+                </div>
+                
+                <div className="flex items-center justify-between">
+                  <div className="space-y-0.5">
+                    <Label htmlFor="push-notif">
+                      {language === 'en' ? "Push Notifications" : "Notificações Push"}
+                    </Label>
+                    <p className="text-sm text-gray-500 dark-purple:text-gray-400 dark-tactical:text-gray-400 dark-hacker:text-gray-400">
+                      {language === 'en' 
+                        ? "Receive notifications in the browser" 
+                        : "Receba notificações no navegador"}
+                    </p>
+                  </div>
+                  <Switch id="push-notif" defaultChecked />
+                </div>
+                
+                <div className="flex items-center justify-between">
+                  <div className="space-y-0.5">
+                    <Label htmlFor="task-updates">
+                      {language === 'en' ? "Task Updates" : "Atualizações de Tarefas"}
+                    </Label>
+                    <p className="text-sm text-gray-500 dark-purple:text-gray-400 dark-tactical:text-gray-400 dark-hacker:text-gray-400">
+                      {language === 'en' 
+                        ? "Get notified about task assignments and updates" 
+                        : "Receba notificações sobre atribuições e atualizações de tarefas"}
+                    </p>
+                  </div>
+                  <Switch id="task-updates" defaultChecked />
+                </div>
+              </div>
+              
+              <Button onClick={handleSaveNotifications}>
+                {language === 'en' ? "Save Preferences" : "Salvar Preferências"}
+              </Button>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
     </div>
   );
-};
-
-export default Settings;
+}

@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { X, Send, Mic, BrainCircuit, Image } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 type Message = {
   id: string;
@@ -19,11 +20,14 @@ type ChatDrawerProps = {
 
 export function ChatDrawer({ open, onClose }: ChatDrawerProps) {
   const { toast } = useToast();
+  const { t, language } = useLanguage();
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: "Olá! Sou o assistente do Jenova, equipado com Gemini. Como posso ajudar a gerenciar seus projetos hoje?",
+      text: language === 'en' 
+        ? "Hello! I'm Jenova's assistant, equipped with Gemini. How can I help manage your projects today?"
+        : "Olá! Sou o assistente do Jenova, equipado com Gemini. Como posso ajudar a gerenciar seus projetos hoje?",
       sender: 'ai',
       timestamp: new Date(),
     },
@@ -45,13 +49,23 @@ export function ChatDrawer({ open, onClose }: ChatDrawerProps) {
     
     // Simulate AI response
     setTimeout(() => {
-      const aiResponses = [
+      const aiResponsesEn = [
+        "I can help you reorganize your project schedules for better efficiency.",
+        "Based on your current tasks, I recommend prioritizing the design phase.",
+        "I've analyzed your project data and created a summary report. Would you like to see it?",
+        "I can create a new task for you. How would you like to name it and what's the deadline?",
+        "Your current project is 68% complete and on schedule.",
+      ];
+      
+      const aiResponsesPt = [
         "Posso ajudar você a reorganizar os cronogramas do projeto para melhor eficiência.",
         "Com base nas suas tarefas atuais, recomendo priorizar a fase de design.",
         "Analisei os dados do seu projeto e criei um relatório resumido. Gostaria de vê-lo?",
         "Posso criar uma nova tarefa para você. Como deseja nomeá-la e qual o prazo?",
         "Seu projeto atual está 68% concluído e dentro do prazo previsto.",
       ];
+      
+      const aiResponses = language === 'en' ? aiResponsesEn : aiResponsesPt;
       
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -66,15 +80,19 @@ export function ChatDrawer({ open, onClose }: ChatDrawerProps) {
 
   const handleVoiceCommand = () => {
     toast({
-      title: "Assistente de Voz",
-      description: "Comandos de voz estarão disponíveis na próxima atualização.",
+      title: language === 'en' ? "Voice Assistant" : "Assistente de Voz",
+      description: language === 'en' 
+        ? "Voice commands will be available in the next update."
+        : "Comandos de voz estarão disponíveis na próxima atualização.",
     });
   };
 
   const handleImageUpload = () => {
     toast({
-      title: "Upload de Imagem",
-      description: "Envio de imagens estará disponível na próxima atualização.",
+      title: language === 'en' ? "Image Upload" : "Upload de Imagem",
+      description: language === 'en'
+        ? "Image sending will be available in the next update."
+        : "Envio de imagens estará disponível na próxima atualização.",
     });
   };
 
@@ -85,7 +103,7 @@ export function ChatDrawer({ open, onClose }: ChatDrawerProps) {
       <div className="flex items-center justify-between p-4 border-b dark-purple:border-[#392c53] dark-tactical:border-[#384D3E] dark-hacker:border-[#1A1A1A]">
         <div className="flex items-center gap-2">
           <BrainCircuit className="h-5 w-5 text-jenova-primary dark-purple:text-purple-400 dark-tactical:text-green-600 dark-hacker:text-red-500" />
-          <h2 className="font-semibold dark-purple:text-gray-200 dark-tactical:text-gray-200 dark-hacker:text-gray-200">Assistente IA</h2>
+          <h2 className="font-semibold dark-purple:text-gray-200 dark-tactical:text-gray-200 dark-hacker:text-gray-200">{t('assistant')}</h2>
         </div>
         <Button variant="ghost" size="icon" onClick={onClose}>
           <X className="h-5 w-5" />
@@ -115,7 +133,7 @@ export function ChatDrawer({ open, onClose }: ChatDrawerProps) {
           <Input
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Digite sua mensagem..."
+            placeholder={t('typeMessage')}
             className="flex-1 dark-purple:bg-[#2a1f45] dark-purple:text-gray-200 dark-tactical:bg-[#2A3C30] dark-tactical:text-gray-200 dark-hacker:bg-[#1A1A1A] dark-hacker:text-gray-200 dark-purple:border-[#392c53] dark-tactical:border-[#384D3E] dark-hacker:border-[#1A1A1A]"
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
@@ -131,12 +149,13 @@ export function ChatDrawer({ open, onClose }: ChatDrawerProps) {
           </Button>
           <Button onClick={handleSendMessage}>
             <Send className="h-5 w-5 mr-2" />
-            Enviar
+            {t('send')}
           </Button>
         </div>
         <p className="text-xs text-gray-500 mt-2 dark-purple:text-gray-400 dark-tactical:text-gray-400 dark-hacker:text-gray-400">
-          Desenvolvido por Gemini 2.5 Pro. Seu assistente aprende com suas interações
-          para ajudar a gerenciar seus projetos com mais eficiência.
+          {language === 'en'
+            ? "Powered by Gemini 2.5 Pro. Your assistant learns from your interactions to help manage your projects more efficiently."
+            : "Desenvolvido por Gemini 2.5 Pro. Seu assistente aprende com suas interações para ajudar a gerenciar seus projetos com mais eficiência."}
         </p>
       </div>
     </div>

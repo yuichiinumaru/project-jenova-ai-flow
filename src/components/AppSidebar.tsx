@@ -13,12 +13,14 @@ import {
   BrainCircuit, 
   Settings,
   MessageSquare,
-  Users
+  Users,
+  Search
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 type NavItem = {
-  title: string;
+  titleKey: string;
   href: string;
   icon: React.ElementType;
   disabled?: boolean;
@@ -26,50 +28,51 @@ type NavItem = {
 
 export function AppSidebar() {
   const location = useLocation();
+  const { t } = useLanguage();
   
   const mainNavItems: NavItem[] = [
     {
-      title: "Dashboard",
+      titleKey: "dashboard",
       href: "/",
       icon: LayoutDashboard,
     },
     {
-      title: "Kanban",
+      titleKey: "kanban",
       href: "/kanban",
       icon: Kanban,
     },
     {
-      title: "Timeline",
+      titleKey: "timeline",
       href: "/timeline",
       icon: Clock,
     },
     {
-      title: "Calendar",
+      titleKey: "calendar",
       href: "/calendar",
       icon: Calendar,
     },
     {
-      title: "Charts",
+      titleKey: "charts",
       href: "/charts",
       icon: BarChart,
     },
     {
-      title: "Flow Diagram",
+      titleKey: "flowDiagram",
       href: "/flow",
       icon: Workflow,
     },
     {
-      title: "Mind Map",
+      titleKey: "mindMap",
       href: "/mind-map",
       icon: Network,
     },
     {
-      title: "Value Stream",
+      titleKey: "valueStream",
       href: "/value-stream",
       icon: Braces,
     },
     {
-      title: "Teams",
+      titleKey: "teams",
       href: "/teams",
       icon: Users,
     },
@@ -77,12 +80,22 @@ export function AppSidebar() {
 
   const otherNavItems: NavItem[] = [
     {
-      title: "AI Assistant",
-      href: "/assistant",
+      titleKey: "intelligence",
+      href: "/intelligence",
       icon: BrainCircuit,
     },
     {
-      title: "Settings",
+      titleKey: "research",
+      href: "/research",
+      icon: Search,
+    },
+    {
+      titleKey: "assistant",
+      href: "/assistant",
+      icon: MessageSquare,
+    },
+    {
+      titleKey: "settings",
       href: "/settings",
       icon: Settings,
     },
@@ -107,6 +120,7 @@ export function AppSidebar() {
                     key={item.href}
                     item={item}
                     isActive={location.pathname === item.href}
+                    t={t}
                   />
                 ))}
               </div>
@@ -119,6 +133,7 @@ export function AppSidebar() {
                     key={item.href}
                     item={item}
                     isActive={location.pathname === item.href}
+                    t={t}
                   />
                 ))}
               </div>
@@ -143,7 +158,7 @@ export function AppSidebar() {
   );
 }
 
-function NavItem({ item, isActive }: { item: NavItem; isActive: boolean }) {
+function NavItem({ item, isActive, t }: { item: NavItem; isActive: boolean; t: (key: string) => string }) {
   return (
     <Link
       to={item.disabled ? "#" : item.href}
@@ -156,7 +171,7 @@ function NavItem({ item, isActive }: { item: NavItem; isActive: boolean }) {
       )}
     >
       <item.icon className="w-5 h-5" />
-      <span>{item.title}</span>
+      <span>{item.titleKey === "research" ? (t.language === 'en' ? "Deep Research" : "Pesquisa Profunda") : t(item.titleKey)}</span>
       {item.disabled && <span className="ml-auto text-xs text-gray-400">Soon</span>}
     </Link>
   );

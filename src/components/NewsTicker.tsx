@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { ChevronRight, ExternalLink, RefreshCw, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 // Mock news data - in a real app this would come from an API
 const initialNewsItems = [
@@ -18,13 +19,14 @@ export function NewsTicker() {
   const [isPaused, setIsPaused] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const { toast } = useToast();
+  const { t, language } = useLanguage();
   const tickerRef = useRef<HTMLDivElement>(null);
 
   // Function to simulate refreshing news
   const refreshNews = () => {
     toast({
-      title: "Atualizando notícias",
-      description: "Buscando as últimas informações...",
+      title: t('updatingNews'),
+      description: t('fetchingLatest'),
     });
     
     // Simulating an API call with setTimeout
@@ -34,8 +36,8 @@ export function NewsTicker() {
       setNewsItems(shuffled);
       
       toast({
-        title: "Notícias atualizadas",
-        description: "As últimas informações foram carregadas.",
+        title: t('newsUpdated'),
+        description: t('latestLoaded'),
       });
     }, 1500);
   };
@@ -44,8 +46,8 @@ export function NewsTicker() {
   const handleNewsClick = (url: string) => {
     // In a real app, this would open the news in a new tab or modal
     toast({
-      title: "Abrindo notícia",
-      description: "Redirecionando para a fonte original...",
+      title: t('openingNews'),
+      description: t('redirectingToSource'),
     });
   };
 
@@ -53,8 +55,8 @@ export function NewsTicker() {
   const openSettings = () => {
     setIsSettingsOpen(true);
     toast({
-      title: "Configurações do feed de notícias",
-      description: "Esta funcionalidade estará disponível em breve.",
+      title: t('newsSettings'),
+      description: t('comingSoon'),
     });
   };
 
