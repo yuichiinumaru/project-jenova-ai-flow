@@ -15,7 +15,7 @@ import MindMap from "./pages/MindMap";
 import ValueStream from "./pages/ValueStream";
 import AIAssistant from "./pages/AIAssistant";
 import Settings from "./pages/Settings";
-import Teams from "./pages/Teams"; // Add import for Teams page
+import Teams from "./pages/Teams";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -36,7 +36,7 @@ const App = () => (
             <Route path="/flow" element={<FlowDiagram />} />
             <Route path="/mind-map" element={<MindMap />} />
             <Route path="/value-stream" element={<ValueStream />} />
-            <Route path="/teams" element={<Teams />} /> {/* Add Teams route */}
+            <Route path="/teams" element={<Teams />} />
             <Route path="/assistant" element={<AIAssistant />} />
             <Route path="/settings" element={<Settings />} />
           </Route>

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { 
@@ -92,8 +93,8 @@ export function AppSidebar() {
       <div className="flex flex-col h-full">
         <div className="flex items-center h-16 px-6 border-b dark-purple:border-[#392c53] dark-tactical:border-[#384D3E] dark-hacker:border-[#1A1A1A]">
           <Link to="/" className="flex items-center gap-2 font-semibold">
-            <BrainCircuit className="w-6 h-6 text-zenith-primary dark-purple:text-purple-400 dark-tactical:text-green-600 dark-hacker:text-red-500" />
-            <span className="text-xl font-bold dark-purple:text-gray-200 dark-tactical:text-gray-200 dark-hacker:text-gray-200">Zenith</span>
+            <BrainCircuit className="w-6 h-6 text-jenova-primary dark-purple:text-purple-400 dark-tactical:text-green-600 dark-hacker:text-red-500" />
+            <span className="text-xl font-bold dark-purple:text-gray-200 dark-tactical:text-gray-200 dark-hacker:text-gray-200">Jenova</span>
           </Link>
         </div>
         <div className="flex-1 overflow-auto">
@@ -149,7 +150,7 @@ function NavItem({ item, isActive }: { item: NavItem; isActive: boolean }) {
       className={cn(
         "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium",
         isActive
-          ? "bg-zenith-primary/10 text-zenith-primary dark-purple:bg-purple-500/20 dark-purple:text-purple-400 dark-tactical:bg-green-700/20 dark-tactical:text-green-600 dark-hacker:bg-red-600/20 dark-hacker:text-red-500"
+          ? "bg-jenova-primary/10 text-jenova-primary dark-purple:bg-purple-500/20 dark-purple:text-purple-400 dark-tactical:bg-green-700/20 dark-tactical:text-green-600 dark-hacker:bg-red-600/20 dark-hacker:text-red-500"
           : "text-gray-700 hover:bg-gray-100 dark-purple:text-gray-300 dark-purple:hover:bg-[#2a1f45] dark-tactical:text-gray-300 dark-tactical:hover:bg-[#2A3C30] dark-hacker:text-gray-300 dark-hacker:hover:bg-[#1A1A1A]",
         item.disabled && "pointer-events-none opacity-60"
       )}

@@ -11,6 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger 
 } from '@/components/ui/dropdown-menu';
+import { NewsTicker } from './NewsTicker';
 
 // Define theme types
 export type ThemeType = 'light' | 'dark-purple' | 'dark-tactical' | 'dark-hacker';
@@ -55,7 +56,7 @@ export function MainLayout() {
               <Menu className="w-5 h-5" />
               <span className="sr-only">Toggle menu</span>
             </Button>
-            <h1 className="text-xl font-semibold">Project Zenith</h1>
+            <h1 className="text-xl font-semibold">Project Jenova</h1>
           </div>
           <div className="flex items-center gap-2">
             <DropdownMenu>
@@ -90,7 +91,7 @@ export function MainLayout() {
               className="relative"
             >
               <MessageSquare className="w-5 h-5" />
-              <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-zenith-accent text-[10px] font-medium text-white">
+              <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-jenova-accent text-[10px] font-medium text-white">
                 1
               </span>
             </Button>
@@ -101,6 +102,9 @@ export function MainLayout() {
         <main className="flex-1 overflow-auto p-4 md:p-6 dark-purple:bg-[#1A1F2C] dark-purple:text-gray-200 dark-tactical:bg-[#1E2D24] dark-tactical:text-gray-200 dark-hacker:bg-[#0D0D0D] dark-hacker:text-gray-200">
           <Outlet />
         </main>
+
+        {/* News Ticker */}
+        <NewsTicker />
       </div>
 
       {/* AI Chat Drawer */}
