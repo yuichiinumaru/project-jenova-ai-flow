@@ -14,6 +14,7 @@ import FlowDiagram from "./pages/FlowDiagram";
 import MindMap from "./pages/MindMap";
 import ValueStream from "./pages/ValueStream";
 import AIAssistant from "./pages/AIAssistant";
+import Intelligence from "./pages/Intelligence";
 import Settings from "./pages/Settings";
 import Teams from "./pages/Teams";
 import NotFound from "./pages/NotFound";
@@ -36,6 +37,7 @@ const App = () => (
             <Route path="/flow" element={<FlowDiagram />} />
             <Route path="/mind-map" element={<MindMap />} />
             <Route path="/value-stream" element={<ValueStream />} />
+            <Route path="/intelligence" element={<Intelligence />} />
             <Route path="/teams" element={<Teams />} />
             <Route path="/assistant" element={<AIAssistant />} />
             <Route path="/settings" element={<Settings />} />
